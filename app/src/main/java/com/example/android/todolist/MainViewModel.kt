@@ -13,7 +13,7 @@ import com.example.android.todolist.database.TaskRepository
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     var repository: TaskRepository
-    val allTasks: LiveData<List<TaskEntry>>
+    val allTasks: LiveData<List<TaskEntry>>?
 
     init {
         val taskDao = AppDatabase.getDatabase(application, viewModelScope).taskDao()

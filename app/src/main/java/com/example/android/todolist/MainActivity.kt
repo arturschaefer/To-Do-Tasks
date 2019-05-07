@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), TaskAdapter.ItemClickListener {
     // Member variables for the adapter and RecyclerView
     private var mRecyclerView: RecyclerView? = null
     private var mAdapter: TaskAdapter? = null
-
+    lateinit var viewModel: MainViewModel
     private var mDb: AppDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(), TaskAdapter.ItemClickListener {
         val decoration = DividerItemDecoration(applicationContext, VERTICAL)
         mRecyclerView!!.addItemDecoration(decoration)
 
+        setupViewModel()
         /*
          Add a touch helper to the RecyclerView to recognize when a user swipes to delete an item.
          An ItemTouchHelper enables touch behavior (like swipe and move) on each ViewHolder,
@@ -72,7 +73,7 @@ class MainActivity : AppCompatActivity(), TaskAdapter.ItemClickListener {
                 AppExecutors.instance?.diskIO()?.execute(Runnable {
                     val position = viewHolder.adapterPosition
                     val tasks = mAdapter!!.tasks
-                    mDb!!.taskDao().deleteTask(tasks!![position])
+                    tasks?.get(position)?.let { viewModel.repository.deleteTask(it) }
                 })
             }
         }).attachToRecyclerView(mRecyclerView)
@@ -90,14 +91,14 @@ class MainActivity : AppCompatActivity(), TaskAdapter.ItemClickListener {
             startActivity(addTaskIntent)
         }
 
-        setupViewModel()
     }
 
     private fun setupViewModel() {
-        val viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModel.allTasks.observe(this, Observer { taskEntries ->
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+
+        viewModel.allTasks?.observe(this, Observer { taskEntries ->
             Log.d(TAG, "Updating list of tasks from LiveData in ViewModel")
-            mAdapter!!.tasks = taskEntries
+            mAdapter?.tasks = taskEntries
         })
     }
 

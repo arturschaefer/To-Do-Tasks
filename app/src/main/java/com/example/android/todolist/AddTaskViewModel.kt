@@ -1,21 +1,29 @@
 package com.example.android.todolist
 
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 
 import com.example.android.todolist.database.AppDatabase
 import com.example.android.todolist.database.TaskEntry
+import com.example.android.todolist.database.TaskRepository
 
-// COMPLETED (5) Make this class extend ViewModel
-class AddTaskViewModel// COMPLETED (8) Create a constructor where you call loadTaskById of the taskDao to initialize the tasks variable
-// Note: The constructor should receive the database and the taskId
-(database: AppDatabase, taskId: Int) : ViewModel() {
-
-    // COMPLETED (6) Add a task member variable for the TaskEntry object wrapped in a LiveData
-    // COMPLETED (7) Create a getter for the task variable
+class AddTaskViewModel (application: Application, taskId: Int) : AndroidViewModel(application) {
     val task: LiveData<TaskEntry>
+    var repository: TaskRepository
 
     init {
-        task = database.taskDao().loadTaskById(taskId)
+        val taskDao = AppDatabase.getDatabase(application, viewModelScope).taskDao()
+        Log.d(TAG, "Actively retrieving the tasks from the DataBase")
+        repository = TaskRepository(taskDao)
+        task = repository.loadTaskById(taskId)
+    }
+
+    companion object {
+        // Constant for logging
+        private val TAG = AddTaskViewModel::class.java.simpleName
     }
 }

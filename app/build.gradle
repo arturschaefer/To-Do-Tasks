@@ -19,6 +19,9 @@ android {
             minifyEnabled false
         }
     }
+    packagingOptions {
+        exclude 'META-INF/atomicfu.kotlin_module'
+    }
 }
 
 dependencies {

@@ -21,7 +21,7 @@ abstract class AppDatabase : RoomDatabase() {
 
         override fun onOpen(db: SupportSQLiteDatabase) {
             super.onOpen(db)
-            INSTANCE?.let { database ->
+            INSTANCE?.let {
                 scope.launch(Dispatchers.IO) {
                 }
             }
