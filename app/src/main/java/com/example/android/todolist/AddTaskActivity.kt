@@ -16,21 +16,18 @@
 
 package com.example.android.todolist
 
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
-
-import com.example.android.todolist.database.AppDatabase
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.android.todolist.database.TaskEntry
-
-import java.util.Date
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.*
 
 
 class AddTaskActivity : AppCompatActivity() {
@@ -39,6 +36,8 @@ class AddTaskActivity : AppCompatActivity() {
     private lateinit var mRadioGroup: RadioGroup
     private lateinit var mButton: Button
     private lateinit var viewModel: AddTaskViewModel
+    var isUpdate = false
+    lateinit var taskUpdate: TaskEntry
 
     private var mTaskId = DEFAULT_TASK_ID
     /**
@@ -68,6 +67,7 @@ class AddTaskActivity : AppCompatActivity() {
 
         val intent = intent
         if (intent != null && intent.hasExtra(EXTRA_TASK_ID)) {
+            isUpdate = true
             mButton.setText(R.string.update_button)
             if (mTaskId == DEFAULT_TASK_ID) {
                 // populate the UI
@@ -117,7 +117,18 @@ class AddTaskActivity : AppCompatActivity() {
         val date = Date()
 
         val task = TaskEntry(description, priority, date)
-        viewModel.repository.insertTask(task)
+        if (isUpdate) {
+            GlobalScope.launch {
+                taskUpdate.priority = priority
+                taskUpdate.description = description
+                taskUpdate.updatedAt = date
+                viewModel.repository.updateTask(taskUpdate)
+            }.invokeOnCompletion { finish() }
+        } else {
+            GlobalScope.launch {
+                viewModel.repository.insertTask(task)
+            }.invokeOnCompletion { finish() }
+        }
     }
 
     /**
@@ -151,12 +162,13 @@ class AddTaskActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         val factory = AddTaskViewModelFactory(application, mTaskId)
-        viewModel = ViewModelProviders.of(this, factory).get<AddTaskViewModel>(AddTaskViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get<AddTaskViewModel>(AddTaskViewModel::class.java)
 
         viewModel.task.observe(this, object : Observer<TaskEntry> {
             override fun onChanged(taskEntry: TaskEntry?) {
                 viewModel.task.removeObserver(this)
                 populateUI(taskEntry)
+                taskUpdate = taskEntry!!
             }
         })
     }

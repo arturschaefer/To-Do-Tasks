@@ -2,8 +2,6 @@ package com.example.android.todolist.database
 
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
-import androidx.room.Delete
-import androidx.room.Insert
 
 class TaskRepository (private val dao: TaskDao) {
     val allTasks: LiveData<List<TaskEntry>> = dao.loadAllTasks()
@@ -21,6 +19,12 @@ class TaskRepository (private val dao: TaskDao) {
     @WorkerThread
     fun loadTaskById(taskId: Int): LiveData<TaskEntry> {
         return dao.loadTaskById(taskId)
+    }
+
+
+    @WorkerThread
+    fun updateTask(task: TaskEntry) {
+        dao.updateTask(task)
     }
 
 }
