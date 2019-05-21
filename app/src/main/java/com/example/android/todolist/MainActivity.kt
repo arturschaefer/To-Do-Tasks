@@ -27,34 +27,31 @@ import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.android.todolist.database.AppDatabase
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 
 class MainActivity : AppCompatActivity(), TaskAdapter.ItemClickListener {
     // Member variables for the adapter and RecyclerView
-    private var mRecyclerView: RecyclerView? = null
     private var mAdapter: TaskAdapter? = null
     lateinit var viewModel: MainViewModel
-    private var mDb: AppDatabase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set the RecyclerView to its corresponding view
-        mRecyclerView = findViewById(R.id.recyclerViewTasks)
-
         // Set the layout for the RecyclerView to be a linear layout, which measures and
         // positions items within a RecyclerView into a linear list
-        mRecyclerView!!.layoutManager = LinearLayoutManager(this)
+        recyclerViewTasks.layoutManager = LinearLayoutManager(this)
 
         // Initialize the adapter and attach it to the RecyclerView
         mAdapter = TaskAdapter(this, this)
-        mRecyclerView!!.adapter = mAdapter
+        recyclerViewTasks.adapter = mAdapter
 
         val decoration = DividerItemDecoration(applicationContext, VERTICAL)
-        mRecyclerView!!.addItemDecoration(decoration)
+        recyclerViewTasks.addItemDecoration(decoration)
 
         setupViewModel()
         /*
@@ -70,13 +67,13 @@ class MainActivity : AppCompatActivity(), TaskAdapter.ItemClickListener {
             // Called when a user swipes left or right on a ViewHolder
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
                 // Here is where you'll implement swipe to delete
-                AppExecutors.instance?.diskIO()?.execute(Runnable {
+                GlobalScope.launch {
                     val position = viewHolder.adapterPosition
                     val tasks = mAdapter!!.tasks
                     tasks?.get(position)?.let { viewModel.repository.deleteTask(it) }
-                })
+                }
             }
-        }).attachToRecyclerView(mRecyclerView)
+        }).attachToRecyclerView(recyclerViewTasks)
 
         /*
          Set the Floating Action Button (FAB) to its corresponding View.

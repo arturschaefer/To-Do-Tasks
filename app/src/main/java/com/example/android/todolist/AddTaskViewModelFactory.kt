@@ -4,11 +4,9 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
-import com.example.android.todolist.database.AppDatabase
 
-class AddTaskViewModelFactory(val application: Application,
-                              private val mTaskId: Int) : ViewModelProvider.NewInstanceFactory() {
+class AddTaskViewModelFactory(private val mApplication: Application, private val mParam: Int) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return AddTaskViewModel(application, mTaskId) as T
+        return AddTaskViewModel(mApplication, mParam) as T
     }
 }

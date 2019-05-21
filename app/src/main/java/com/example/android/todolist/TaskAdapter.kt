@@ -18,17 +18,16 @@ package com.example.android.todolist
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
 import com.example.android.todolist.database.TaskEntry
-
+import kotlinx.android.synthetic.main.task_layout.view.*
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 /**
  * This TaskAdapter creates and binds ViewHolders, that hold the description and priority of a task,
@@ -38,8 +37,8 @@ class TaskAdapter
 /**
  * Constructor for the TaskAdapter that initializes the Context.
  *
- * @param context  the current Context
- * @param listener the ItemClickListener
+ * @param mContext  the current Context
+ * @param mItemClickListener the ItemClickListener
  */
 (private val mContext: Context, // Member variable to handle item clicks
  private val mItemClickListener: ItemClickListener) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
@@ -136,15 +135,11 @@ class TaskAdapter
     (itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
         // Class variables for the task description and priority TextViews
-        var taskDescriptionView: TextView
-        var updatedAtView: TextView
-        var priorityView: TextView
+        var taskDescriptionView: TextView = itemView.taskDescription
+        var updatedAtView: TextView = itemView.taskUpdatedAt
+        var priorityView: TextView = itemView.priorityTextView
 
         init {
-
-            taskDescriptionView = itemView.findViewById(R.id.taskDescription)
-            updatedAtView = itemView.findViewById(R.id.taskUpdatedAt)
-            priorityView = itemView.findViewById(R.id.priorityTextView)
             itemView.setOnClickListener(this)
         }
 
