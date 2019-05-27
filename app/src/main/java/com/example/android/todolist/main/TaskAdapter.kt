@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.example.android.todolist
+package com.example.android.todolist.main
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -24,6 +24,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.todolist.R
 import com.example.android.todolist.database.TaskEntry
 import kotlinx.android.synthetic.main.task_layout.view.*
 import java.text.SimpleDateFormat

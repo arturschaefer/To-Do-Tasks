@@ -14,13 +14,16 @@
 * limitations under the License.
 */
 
-package com.example.android.todolist
+package com.example.android.todolist.add_task
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.example.android.todolist.R
 import com.example.android.todolist.database.TaskEntry
+import com.example.android.todolist.view_model.AddTaskViewModel
+import com.example.android.todolist.view_model.AddTaskViewModelFactory
 import kotlinx.android.synthetic.main.activity_add_task.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

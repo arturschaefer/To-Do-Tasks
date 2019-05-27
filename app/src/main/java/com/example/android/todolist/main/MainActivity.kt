@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-package com.example.android.todolist
+package com.example.android.todolist.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -27,6 +27,9 @@ import androidx.recyclerview.widget.DividerItemDecoration.VERTICAL
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.android.todolist.R
+import com.example.android.todolist.add_task.AddTaskActivity
+import com.example.android.todolist.view_model.MainViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope

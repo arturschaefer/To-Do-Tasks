@@ -12,7 +12,7 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <!-- The manifest entry for the MainActivity -->
-        <activity android:name="com.example.android.todolist.MainActivity">
+        <activity android:name="com.example.android.todolist.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
 
         <!-- AddTaskActivity -->
         <activity
-            android:name="com.example.android.todolist.AddTaskActivity"
+            android:name="com.example.android.todolist.add_task.AddTaskActivity"
             android:label="@string/add_task_activity_name" />
 
     </application>
