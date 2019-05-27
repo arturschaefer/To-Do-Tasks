@@ -48,7 +48,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/materialRed"
+                android:background="@drawable/left_red_radio_button"
                 android:checked="true"
                 android:text="@string/high_priority"
                 android:theme="@style/WhiteRadioButton" />
@@ -67,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/materialYellow"
+                android:background="@drawable/rigth_yellow_button"
                 android:text="@string/low_priority"
                 android:theme="@style/WhiteRadioButton" />
 
@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/blue_button"
         android:text="@string/add_button"
         android:textColor="@android:color/primary_text_dark" />
 
