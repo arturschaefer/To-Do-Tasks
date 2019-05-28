@@ -1,4 +1,4 @@
-package com.example.android.todolist.view_model
+package com.schaefer.android.todolist.view_model
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

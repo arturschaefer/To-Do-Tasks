@@ -1,4 +1,4 @@
-package com.example.android.todolist.view_model
+package com.schaefer.android.todolist.view_model
 
 import android.app.Application
 import android.util.Log
@@ -6,9 +6,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 
-import com.example.android.todolist.database.AppDatabase
-import com.example.android.todolist.database.TaskEntry
-import com.example.android.todolist.database.TaskRepository
+import com.schaefer.android.todolist.database.AppDatabase
+import com.schaefer.android.todolist.database.TaskEntry
+import com.schaefer.android.todolist.database.TaskRepository
 
 class AddTaskViewModel(application: Application, taskId: Int) : AndroidViewModel(application) {
     val task: LiveData<TaskEntry>

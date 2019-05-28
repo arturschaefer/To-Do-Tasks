@@ -1,11 +1,10 @@
-package com.example.android.todolist.database
+package com.schaefer.android.todolist.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-
-import java.util.Date
+import java.util.*
 
 @Entity(tableName = "task")
 class TaskEntry {

@@ -1,8 +1,7 @@
-package com.example.android.todolist.database
+package com.schaefer.android.todolist.database
 
 import androidx.room.TypeConverter
-
-import java.util.Date
+import java.util.*
 
 class DateConverter {
     @TypeConverter
